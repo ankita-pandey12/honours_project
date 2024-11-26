@@ -125,7 +125,7 @@ To set up the Laravel project, follow the instructions below:
 
 This will open the local develp[ment verion of the application
 
-### Note
+## Note
 - If you're using [Laravel Valet](https://laravel.com/docs/9.x/valet), this URL will automatically work after running `valet link`. 
 - If you're using other local development environments (like Herd, XAMPP, Homestead, or Docker), ensure that your local server is configured to serve the application at this URL.
 
