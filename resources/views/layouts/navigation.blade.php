@@ -30,7 +30,11 @@
                     <x-nav-link :href="route('tasks.today')" :active="request()->routeIs('tasks.today')">
                         {{ __('Today\'s Tasks') }}
                     </x-nav-link>
-
+                    <!-- Completed Tasks Link (Added) -->  
+    
+                     <x-nav-link :href="route('tasks.completed')" :active="request()->routeIs('tasks.completed')">
+                        {{ __('Completed Tasks') }}
+                    </x-nav-link>
                 </div>
             </div>
 

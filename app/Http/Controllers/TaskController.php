@@ -91,6 +91,17 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('error', 'No tasks selected to delete.');
     }
+    // Get completed tasks
+    public function completedTasks()
+    {
+        $tasks = Task::where('user_id', Auth::id())
+            ->where('is_completed', true)
+            ->orderBy('due_date', 'asc')
+            ->get();
+
+        return view('tasks.completed', compact('tasks'));
+    }
+
 
     // Get today's tasks
     public function todayTasks()
@@ -111,5 +122,6 @@ class TaskController extends Controller
 
         return view('tasks.today', compact('tasks'));
     }
-
+ 
+    
 }

@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     // Today's tasks
     Route::get('/tasks/today', [TaskController::class, 'todayTasks'])->name('tasks.today');
     
+    // Completed tasks
+    Route::get('/tasks/completed', [TaskController::class, 'completedTasks'])->name('tasks.completed');
 });
 
 
