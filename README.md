@@ -64,3 +64,70 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Getting Started
+
+To set up the Laravel project, follow the instructions below:
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/ankita-pandey12/honours_project.git
+
+2. **Navigate to the project directory**:
+
+   ```bash
+   cd honours_project
+
+3. **Install PHP dependencies**:
+
+    ```bash
+    composer install
+    
+4. **Install Node.js dependencies**:
+
+    ```bash
+    npm install
+
+5. **Set Up Environment Variables**:
+
+    ```bash
+    cp .env.example .env
+
+6. **Generate Application Key**:
+
+    ```bash
+    php artisan key:generate
+
+6. **Generate Application Key**:
+
+    ```bash
+    php artisan key:generate
+
+7. **Run Database Migrations**:
+
+    ```bash
+    php artisan migrate
+    yes
+
+8. **Build the frontend assets**:
+
+    ```bash
+    npm run build
+
+9. **Access the Application in the Browser**:
+
+    After setting up the application and building the assets, you can now view the project in      your browser.
+    
+    To do so, open your web browser and enter the following URL in the address bar:
+    ```bash
+    http://honours_project.test
+
+This will open the local develp[ment verion of the application
+
+### Note
+- If you're using [Laravel Valet](https://laravel.com/docs/9.x/valet), this URL will automatically work after running `valet link`. 
+- If you're using other local development environments (like Herd, XAMPP, Homestead, or Docker), ensure that your local server is configured to serve the application at this URL.
+
+
+    
