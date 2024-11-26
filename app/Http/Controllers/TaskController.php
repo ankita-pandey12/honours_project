@@ -33,17 +33,63 @@ class TaskController extends Controller
             'is_completed' => false,
         ]);
 
-         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
-    public function index()
+        // Show all tasks for the authenticated user
+        public function index()
+        {
+            $tasks = Task::where('user_id', Auth::id())
+                ->orderByRaw("
+                    CASE priority 
+                        WHEN 'high' THEN 1 
+                        WHEN 'medium' THEN 2 
+                        WHEN 'low' THEN 3 
+                        ELSE 4 
+                    END
+                ")
+                ->get();
+    
+            return view('tasks.index', compact('tasks'));
+        }
+
+        // Toggle the status of a task
+    public function toggleStatus(Request $request)
     {
-        // Fetch all tasks from the database
-        $tasks = Task::orderBy('created_at', 'desc')->get();
+        $taskIds = $request->input('task_ids', []);
 
-        // Pass tasks to the view
-        return view('tasks.index', compact('tasks'));
+        if (!empty($taskIds)) {
+            foreach ($taskIds as $taskId) {
+                $task = Task::where('id', $taskId)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+                if ($task) {
+                    $task->is_completed = !$task->is_completed;
+                    $task->save();
+                }
+            }
+
+            return redirect()->route('tasks.index')->with('success', 'Task status updated successfully.');
+        }
+
+        return redirect()->route('tasks.index')->with('error', 'No tasks selected to update.');
     }
 
+    // Delete selected tasks
+    public function deleteSelected(Request $request)
+    {
+        $taskIds = $request->input('task_ids', []);
+
+        if (!empty($taskIds)) {
+            Task::whereIn('id', $taskIds)
+                ->where('user_id', Auth::id())
+                ->delete();
+
+            return redirect()->route('tasks.index')->with('success', 'Selected tasks have been deleted.');
+        }
+
+        return redirect()->route('tasks.index')->with('error', 'No tasks selected to delete.');
+    }
 
 }

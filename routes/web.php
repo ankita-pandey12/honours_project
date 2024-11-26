@@ -30,6 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 
+    // Delete selected tasks
+    Route::post('/tasks/deleteSelected', [TaskController::class, 'deleteSelected'])->name('tasks.deleteSelected');
+
+    // Update selected task statuses
+    Route::post('/tasks/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
+
 });
 
 // Include the authentication routes
