@@ -8,7 +8,7 @@
         <title>Task Management App</title>
 
         <!-- Favicon -->
-        <link rel="icon" href="{{ asset('task.png') }}" type="image/png">
+        <link rel="icon" href="{{ asset('tasks.png') }}" type="image/png">
 
 
         <!-- Fonts -->

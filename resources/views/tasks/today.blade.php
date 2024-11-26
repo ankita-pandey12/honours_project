@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
+<div class="container mx-auto px-4 py-6" style="max-width: 1200px; margin: 0 auto;">
     <h2 class="text-2xl font-semibold text-white mb-4 text-center">Today's Tasks List</h2>
 
     <!-- Check if there are any tasks -->
@@ -11,14 +11,15 @@
         <!-- Form to update task status and delete tasks -->
         <form action="{{ route('tasks.deleteSelected') }}" method="POST" class="text-center">
             @csrf
-            <div class="overflow-x-auto mx-auto">
-                <table class="min-w-full table-auto border-collapse border border-gray-200 mx-auto">
+            <!-- Constrain the table width -->
+            <div class="overflow-x-auto mx-auto p-4">
+                <table class="min-w-full table-auto border-collapse border border-gray-200 mx-auto w-full">
                     <thead class="bg-gray-800 text-white">
                         <tr>
-                            <th class="px-4 py-2 border border-gray-300">#</th> <!-- Index column -->
-                            <th class="px-4 py-2 border border-gray-300">Select</th>
-                            <th class="px-4 py-2 border border-gray-300">Title</th>
-                            <th class="px-4 py-2 border border-gray-300">Description</th>
+                            <th class="px-4 py-2 border border-gray-300 text-center">#</th> <!-- Index column -->
+                            <th class="px-2 py-2 border border-gray-300" style="width: 80px;">Select</th> <!-- Adjusted width for Select -->
+                            <th class="px-4 py-2 border border-gray-300">Title</th> <!-- Adjusted width for Title -->
+                            <th class="px-4 py-2 border border-gray-300">Description</th> <!-- Adjusted width for Description -->
                             <th class="px-4 py-2 border border-gray-300">Priority</th>
                             <th class="px-4 py-2 border border-gray-300">Due Date</th>
                             <th class="px-4 py-2 border border-gray-300">Status</th>
@@ -26,18 +27,20 @@
                     </thead>
                     <tbody class="bg-gray-900 text-gray-300">
                         @foreach ($tasks as $task)
-                            <tr class="{{ $loop->odd ? 'bg-gray-600' : 'bg-gray-700' }}">
+                            <tr>
                                 <td class="px-4 py-2 border border-gray-300 text-center">{{ $loop->iteration }}</td> <!-- Index number -->
-                                <td class="px-4 py-2 border border-gray-300 text-center">
+                                <td class="px-2 py-2 border border-gray-300 text-center" style="width: 80px;">
                                     <!-- Checkbox to mark task as complete -->
                                     <input type="checkbox" name="task_ids[]" value="{{ $task->id }} "
                                         {{ $task->is_completed ? 'checked' : '' }}
                                         class="form-checkbox h-5 w-5 text-blue-600">
                                 </td>
                                 <td class="px-4 py-2 border border-gray-300">{{ $task->title }}</td>
-                                <td class="px-4 py-2 border border-gray-300">{{ $task->description }}</td>
-                                <td class="px-4 py-2 border border-gray-300 capitalize">{{ $task->priority }}</td>
-                                <td class="px-4 py-2 border border-gray-300">
+                                <td class="px-4 py-2 border border-gray-300 break-words" style="max-width: 320px; word-wrap: break-word;">
+                                    {{ $task->description }}
+                                </td>
+                                <td class="px-4 py-2 border border-gray-300 capitalize text-center">{{ $task->priority }}</td>
+                                <td class="px-4 py-2 border border-gray-300 text-center">
                                     {{ \Carbon\Carbon::parse($task->due_date)->format('d-m-Y') }}
                                 </td>
                                 <td class="px-4 py-2 border border-gray-300 text-center">
