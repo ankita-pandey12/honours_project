@@ -36,7 +36,11 @@ Route::middleware('auth')->group(function () {
     // Update selected task statuses
     Route::post('/tasks/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
 
+    // Today's tasks
+    Route::get('/tasks/today', [TaskController::class, 'todayTasks'])->name('tasks.today');
+    
 });
+
 
 // Include the authentication routes
 require __DIR__ . '/auth.php';

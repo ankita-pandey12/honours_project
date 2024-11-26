@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-blue-500 shadow-xl">
+<nav x-data="{ open: false }" class="bg-gray-800 shadow-xl">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -25,6 +25,12 @@
                     <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
                         {{ __('View Tasks') }}
                     </x-nav-link>
+
+                    <!-- Today's Tasks Link -->
+                    <x-nav-link :href="route('tasks.today')" :active="request()->routeIs('tasks.today')">
+                        {{ __('Today\'s Tasks') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -90,6 +96,13 @@
             <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
                 {{ __('View Tasks') }}
             </x-responsive-nav-link>
+
+            <!-- Today's Tasks Link (Responsive) -->
+            <x-responsive-nav-link :href="route('tasks.today')" :active="request()->routeIs('tasks.today')">
+                {{ __('Today\'s Tasks') }}
+            </x-responsive-nav-link>
+
+            
         </div>
 
         <!-- Responsive Settings Options -->

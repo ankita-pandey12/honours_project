@@ -92,4 +92,24 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('error', 'No tasks selected to delete.');
     }
 
+    // Get today's tasks
+    public function todayTasks()
+    {
+        $today = now()->timezone('Asia/Kolkata')->toDateString();
+
+        $tasks = Task::where('user_id', Auth::id())
+            ->whereDate('due_date', $today)
+            ->orderByRaw("
+                CASE priority 
+                    WHEN 'high' THEN 1 
+                    WHEN 'medium' THEN 2 
+                    WHEN 'low' THEN 3 
+                    ELSE 4 
+                END
+            ")
+            ->get();
+
+        return view('tasks.today', compact('tasks'));
+    }
+
 }
