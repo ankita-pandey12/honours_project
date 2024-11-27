@@ -21,7 +21,7 @@
                 </thead>
                 <tbody class="bg-gray-900 text-gray-300">
                     @foreach ($tasks as $task)
-                        <tr class="hover:bg-gray-500 transition">
+                        <tr>
                             <td class="px-4 py-2 border border-gray-300 text-center">{{ $loop->iteration }}</td> <!-- Display the index here -->
                             <td class="px-4 py-2 border border-gray-300 text-center">{{ $task->title }}</td>
                             <td class="px-4 py-2 border border-gray-300 text-center" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px;">{{ $task->description }}</td>
