@@ -36,24 +36,30 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
-        // Show all tasks for the authenticated user
-        public function index()
-        {
-            $tasks = Task::where('user_id', Auth::id())
-                ->orderByRaw("
-                    CASE priority 
-                        WHEN 'high' THEN 1 
-                        WHEN 'medium' THEN 2 
-                        WHEN 'low' THEN 3 
-                        ELSE 4 
-                    END
-                ")
-                ->get();
-    
-            return view('tasks.index', compact('tasks'));
-        }
+    // Show all tasks for the authenticated user
+    public function index()
+    {
+        $tasks = Task::where('user_id', Auth::id())
+            ->orderByRaw("
+            CASE priority 
+                WHEN 'high' THEN 1 
+                WHEN 'medium' THEN 2 
+                WHEN 'low' THEN 3 
+                ELSE 4 
+            END
+        ")
+            ->get()
+            ->map(function ($task) {
+                // Format the due_date
+                $task->formatted_due_date = \Carbon\Carbon::parse($task->due_date)->format('jS M Y');
+                return $task;
+            });
 
-        // Toggle the status of a task
+        return view('tasks.index', compact('tasks'));
+    }
+
+
+    // Toggle the status of a task
     public function toggleStatus(Request $request)
     {
         $taskIds = $request->input('task_ids', []);
@@ -91,13 +97,18 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('error', 'No tasks selected to delete.');
     }
+
     // Get completed tasks
     public function completedTasks()
     {
         $tasks = Task::where('user_id', Auth::id())
             ->where('is_completed', true)
             ->orderBy('due_date', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($task) {
+                $task->formatted_due_date = \Carbon\Carbon::parse($task->due_date)->format('jS M Y');
+                return $task;
+            });
 
         return view('tasks.completed', compact('tasks'));
     }
@@ -118,10 +129,38 @@ class TaskController extends Controller
                     ELSE 4 
                 END
             ")
-            ->get();
+            ->get()
+            ->map(function ($task) {
+                $task->formatted_due_date = \Carbon\Carbon::parse($task->due_date)->format('jS M Y');
+                return $task;
+            });
 
         return view('tasks.today', compact('tasks'));
     }
- 
-    
+
+    //Edit the tasks 
+    public function edit(Task $task)
+    {
+        return view('tasks.edit', compact('task'));
+    }
+
+    // Update task
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'priority' => 'required|in:low,medium,high',
+            'due_date' => 'required|date|after_or_equal:today',
+        ]);
+
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'priority' => $request->priority,
+            'due_date' => $request->due_date,
+        ]);
+
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+    }
 }

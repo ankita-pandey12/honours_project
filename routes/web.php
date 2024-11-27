@@ -41,6 +41,13 @@ Route::middleware('auth')->group(function () {
     
     // Completed tasks
     Route::get('/tasks/completed', [TaskController::class, 'completedTasks'])->name('tasks.completed');
+
+    // Edit tasks
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    
+    // Update task
+    Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
 });
 
 
