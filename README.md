@@ -117,13 +117,13 @@ To set up the Laravel project, follow the instructions below:
 
 9. **Access the Application in the Browser**:
 
-    After setting up the application and building the assets, you can now view the project in      your browser.
+    After setting up the application and building the assets, you can now view the project in your browser.
     
     To do so, open your web browser and enter the following URL in the address bar:
     ```bash
     http://honours_project.test
 
-This will open the local develp[ment verion of the application
+This will open the local development verion of the application.
 
 ## Note
 - If you're using [Laravel Valet](https://laravel.com/docs/9.x/valet), this URL will automatically work after running `valet link`. 
